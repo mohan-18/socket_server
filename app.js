@@ -7,7 +7,7 @@ const xlsx=require("xlsx");
 const cors=require("cors");
 
 var Branch_db=require("./models/branch");
-var Alert_db=require("./models/alert");
+
 
 corsOptions={
   cors: true,
@@ -16,8 +16,12 @@ corsOptions={
  const io = socketio(http, corsOptions);
 
 
-const mongoURI = 'mongodb://localhost/super';
-mongoose.connect(mongoURI, { useNewUrlParser: true }, { useUnifiedTopology: true });
+const mongoURI = 'mongodb+srv://mohan:passwordmohan@cluster0.xtzpa.mongodb.net/super?retryWrites=true&w=majority';
+mongoose.connect(mongoURI).then(()=>{
+  console.log("db connected");
+}).catch((err)=>{
+  console.log(err);
+});
 
 //for initialisation
 
