@@ -11,7 +11,7 @@ var Branch_db=require("./models/branch");
 
 corsOptions={
   cors: true,
-  origins:["http://localhost:5000"],
+  origins:["http://localhost:3000"],
  }
  const io = socketio(http, corsOptions);
 
@@ -50,9 +50,22 @@ app.get("/",(req,res)=>{
   io.on('connection', socket => {
 
     socket.on('alert', ({pin,contact}) => {
-        console.log("Hit alert",pin,contact);
         socket.broadcast.to(pin).emit('notification',pin,contact);
     })
+
+    socket.on('admin', () => {
+      socket.join("invalid");
+      Branch_db.find().distinct('Pincode_Covered', function(error, item) {
+      if(error)
+      console.log(error);
+      else{
+        item.forEach(e => {
+          socket.join(e['Pincode_Covered']);
+        });
+      }
+      });
+    })
+
     socket.on('join', ({brname}) => {
 
       Branch_db.find({Branch_Name: brname},function(err,item){

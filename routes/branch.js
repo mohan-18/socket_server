@@ -7,17 +7,17 @@ app.get("/pin/:pincode",(req,res)=>{
      console.log(pin,"m");
     Branch_db.find({Pincode_Covered: pin},function(err,item){
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }else  
-        res.send(item);
+        res.status(200).send(item);
     });
 });
 app.get("/all",(req,res)=>{
     Branch_db.find({},function(err,item){
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }else
-        res.send(item);
+        res.status(200).send(item);
 
     });
 });

@@ -28,16 +28,24 @@ app.post("/", (req,res)=>{
    
 })
 
-
+app.get("/alerts/all",(req,res)=>{
+    Alert_db.find({},function(err,item){
+        if(err){
+            res.status(400).send(err);
+        }else{
+        res.status(200).send(item);
+        }
+    })
+});
 app.get("/:branch_name",(req,res)=>{
     let branch=req.params.branch_name;
     console.log(branch,"mohan");
     Alert_db.find({Branch_Name: branch},function(err,item){
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }else{
         //console.log(item);
-        res.send(item);
+        res.status(200).send(item);
         }
     })
 });
