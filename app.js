@@ -55,13 +55,15 @@ app.get("/",(req,res)=>{
 
     socket.on('admin', () => {
       socket.join("invalid");
+      console.log("admin app.js");
       Branch_db.find().distinct('Pincode_Covered', function(error, item) {
       if(error)
       console.log(error);
       else{
         item.forEach(e => {
-          socket.join(e['Pincode_Covered']);
+          socket.join(e);
         });
+        
       }
       });
     })
@@ -81,7 +83,7 @@ app.get("/",(req,res)=>{
   });
   
 
-const PORT = process.env.PORT||3000;
+const PORT = process.env.PORT||5000;
 http.listen(PORT,function(){
     console.log("listening");
 })
