@@ -12,6 +12,7 @@ app.post("/", (req,res)=>{
         if(err){
             res.status(400).send(err);
         }else{
+            if(item.length>0){
             item.forEach(async (it)=>{
             let brname=it['Branch_Name'];
             let noti = { Branch_Name:brname,Pincode:pincode, Contact:contact};
@@ -22,6 +23,15 @@ app.post("/", (req,res)=>{
                 }
               });
               })
+            }else{
+                let noti = { Branch_Name:"not available",Pincode:pincode, Contact:contact};
+                Alert_db.create(noti, function (err, item) {
+                    if (err) res.status(400).send(err);
+                    else {
+                      console.log(item);
+                    }
+                  }); 
+            }
         }
     })
     res.send("notified");
