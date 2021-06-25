@@ -27,7 +27,7 @@ mongoose.connect(mongoURI).then(()=>{
 
 // const wb = xlsx.readFile("BeetleNut_Data.xlsx").Sheets["Sheet1"];
 // const data=xlsx.utils.sheet_to_json(wb);
-// const {seed}=require('./routes/initialise');
+// const {seed}=require('./utils/initialise');
 // seed(data);
 
 app.use(cors());
