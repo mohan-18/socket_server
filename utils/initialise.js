@@ -1,5 +1,4 @@
 var Branch_db=require("../models/branch");
-var Alert_db=require("../models/alert");
 
 function splitarray(pins){
     let separated=[];
@@ -22,8 +21,11 @@ function splitarray(pins){
 function seed(data){
     data.forEach((store)=>{
         let Pincodes=splitarray(String(store['Pincode_Covered']));
+        let str=String(store['Branch_Name']);
+        let lower_branch=str.toLowerCase();
         Pincodes.forEach((Pincode)=>{
             var newbr={...store
+                    ,Branch_Name:lower_branch
                     ,Pincode_Covered:Pincode};
             Branch_db.create(newbr,function(err,new_br){
                 if(err)
@@ -34,21 +36,7 @@ function seed(data){
         })
      })
 }
- 
-function alert(data){
-    data.forEach((store)=>{
-        var newi={
-            Branch_Name:store['Branch_Name'],
-        }
-        Alert_db.create(newi,function(err,newi){
-            if(err)
-            console.log(err);
-            else{
-            console.log(newi);
-            }
-        })
-    })
-}
+
 module.exports = {
     seed
 };
