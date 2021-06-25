@@ -52,9 +52,12 @@ app.get("/",(req,res)=>{
     socket.on('alert', ({pin,contact}) => {
         socket.broadcast.to(pin).emit('notification',pin,contact);
     })
+    socket.on('noBranch', ({pin,contact}) => {
+      socket.broadcast.to("noBranch").emit('notification',pin,contact);
+  })
 
     socket.on('admin', () => {
-      socket.join("invalid");
+      socket.join("noBranch");
       console.log("admin app.js");
       Branch_db.find().distinct('Pincode_Covered', function(error, item) {
       if(error)
